@@ -40,7 +40,7 @@ vi_bmds <- function(dist_mat, p = 2, prior_params, B, S, max_iter, device) {
     phi <- get_phi(theta)
     z <- generate_z(phi, S)
 
-    log_p <- compute_log_joint(dist_vec, z, prior_params, B)
+    log_p <- compute_log_joint(dist_vec, z, prior_params, B, device)
     log_q <- compute_log_q(z, phi)
 
     loss <- -(log_p - log_q)$mean()
