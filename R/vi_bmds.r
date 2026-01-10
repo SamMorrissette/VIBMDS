@@ -1,3 +1,17 @@
+#' Title
+#'
+#' @param dist_mat
+#' @param p
+#' @param prior_params
+#' @param B
+#' @param S
+#' @param max_iter
+#' @param device
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 vi_bmds <- function(dist_mat, p = 2, prior_params, B, S, max_iter, device) {
 
   dist_mat <- as.matrix(dist_mat)

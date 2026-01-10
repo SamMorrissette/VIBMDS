@@ -1,3 +1,13 @@
+#' Title
+#'
+#' @param dist_vec
+#' @param z
+#' @param B
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 log_lik_minibatch <- function(dist_vec, z, B) {
   n <- z$x$size()[2]
   m <- choose(n, 2)
