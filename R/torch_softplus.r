@@ -5,7 +5,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 torch_softplus <- function(x) {
   if (!inherits(x, "torch_tensor")) {

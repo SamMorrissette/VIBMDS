@@ -7,7 +7,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 torch_rhalfcauchy <- function(sample_shape, scale) {
   u <- torch_rand(sample_shape, device = scale$device)

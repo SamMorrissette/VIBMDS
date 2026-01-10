@@ -7,7 +7,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 torch_log_invgamma <- function(x, a, b) {
   if (!inherits(x, "torch_tensor")) {

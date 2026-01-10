@@ -7,7 +7,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 torch_log_truncnorm <- function(x, mu, sigma) {
   if (!inherits(x, "torch_tensor")) {
