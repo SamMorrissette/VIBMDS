@@ -4,7 +4,7 @@
 \alias{log_lik_minibatch}
 \title{Title}
 \usage{
-log_lik_minibatch(dist_vec, z, B)
+log_lik_minibatch(dist_vec, z, B, device)
 }
 \arguments{
 \item{B}{}
