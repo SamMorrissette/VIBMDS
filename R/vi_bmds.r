@@ -1,5 +1,6 @@
 vi_bmds <- function(dist_mat, p = 2, prior_params, B, S, max_iter, device) {
 
+  dist_mat <- as.matrix(dist_mat)
   n <- nrow(dist_mat)
   theta <- init_theta(n, p, device)
   opt <- optim_adam(params = theta, lr = 0.1)
@@ -18,12 +19,14 @@ vi_bmds <- function(dist_mat, p = 2, prior_params, B, S, max_iter, device) {
     min_lr = min_lr
   )
 
+  dist_vec <- torch_tensor(c(as.dist(dist_mat)), device = device)
+
   for (iter in 1:max_iter) {
     opt$zero_grad()
     phi <- get_phi(theta)
     z <- generate_z(phi, S)
 
-    log_p <- compute_log_joint(dist_mat, z, prior_params, B)
+    log_p <- compute_log_joint(dist_vec, z, prior_params, B)
     log_q <- compute_log_q(z, phi)
 
     loss <- -(log_p - log_q)$mean()

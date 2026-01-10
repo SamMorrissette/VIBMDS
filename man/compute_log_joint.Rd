@@ -4,7 +4,7 @@
 \alias{compute_log_joint}
 \title{Compute the logarithm of the joint density}
 \usage{
-compute_log_joint(dist_mat, z, prior_params, B)
+compute_log_joint(dist_vec, z, prior_params, B)
 }
 \arguments{
 \item{batch_index}{}
