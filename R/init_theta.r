@@ -7,7 +7,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 init_theta <- function(n, p, device) {
   theta <- list(

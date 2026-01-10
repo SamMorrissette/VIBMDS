@@ -6,7 +6,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 generate_z <- function(phi, S) {
   sigma <- torch_reciprocal(distr_gamma(phi$a_sigma, phi$b_sigma)$rsample(sample_shape = c(S)))

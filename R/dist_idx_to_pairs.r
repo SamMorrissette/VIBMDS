@@ -6,7 +6,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 dist_idx_to_pairs <- function(idx, n) {
   if (!inherits(idx, "torch_tensor")) {

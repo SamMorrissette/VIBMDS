@@ -6,7 +6,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 torch_log_halfcauchy <- function(x, scale) {
   if (!inherits(x, "torch_tensor")) {

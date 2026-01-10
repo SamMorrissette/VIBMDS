@@ -6,7 +6,6 @@
 #' @returns
 #' @export
 #'
-#' @import torch
 #' @examples
 get_phi <- function(theta) {
   phi <- list(
