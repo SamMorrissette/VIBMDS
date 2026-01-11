@@ -11,8 +11,8 @@
 log_lik_minibatch <- function(dist_vec, z, B, device) {
   n <- z$x$size()[2]
   m <- choose(n, 2)
-  batch_idx <- torch_randint(low = 1, high = m + 1, size = B, device = device, dtype = torch_int64())
-  #batch_idx <- torch_tensor(sample(m, size = B, replace = FALSE), device = device)
+  #batch_idx <- torch_randint(low = 1, high = m + 1, size = B, device = device, dtype = torch_int64())
+  batch_idx <- torch_tensor(sample(m, size = B, replace = FALSE), device = device)
   pair_idx <- dist_idx_to_pairs(batch_idx, n)
 
   x_i <- z$x$index_select(dim = 2, index = pair_idx$i)

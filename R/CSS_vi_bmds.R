@@ -37,7 +37,6 @@ CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) 
   print("Starting VI")
   for (iter in 1:max_iter) {
     opt$zero_grad()
-    print(iter)
     phi <- CSS_get_phi(theta)
     z <- CSS_generate_z(phi, S)
 
