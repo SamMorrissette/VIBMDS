@@ -13,7 +13,7 @@
 #'
 #' @examples
 CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) {
-
+  print("h1")
   dist_mat <- as.matrix(dist_mat)
   n <- nrow(dist_mat)
   theta <- CSS_init_theta(n, p, device)
@@ -37,14 +37,19 @@ CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) 
   print("Starting VI")
   for (iter in 1:max_iter) {
     opt$zero_grad()
+    print("h2")
     phi <- CSS_get_phi(theta)
+    print("h3")
     z <- CSS_generate_z(phi, S)
+    print("h4")
 
     log_p <- CSS_compute_log_joint(dist_vec, z, prior_params, B, device)
+    print("h5")
     log_q <- CSS_compute_log_q(z, phi)
-
+    print("h6")
     loss <- -(log_p - log_q)$mean()
     loss$backward()
+    print("h7")
     nn_utils_clip_grad_norm_(theta, max_norm = 5.0)
     opt$step()
 
@@ -65,6 +70,7 @@ CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) 
       stop_iter <- iter
       break
     }
+    print("h8")
   }
 
   phi <- CSS_get_phi(theta)
