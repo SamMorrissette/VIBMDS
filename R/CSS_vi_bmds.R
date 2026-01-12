@@ -67,12 +67,8 @@ CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) 
     logerr("about to backward"); sync_cuda("pre-backward")
 
     # wrap backward to force message/traceback into logs
-    tryCatch({
+    with_detect_anomaly({
       loss$backward()
-    }, error = function(e) {
-      logerr("BACKWARD ERROR: ", conditionMessage(e))
-      traceback(50)
-      quit(status=1)
     })
 
     logerr("h7"); sync_cuda("h7")
