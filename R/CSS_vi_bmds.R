@@ -13,6 +13,18 @@
 #'
 #' @examples
 CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) {
+  logerr <- function(...) { cat(..., "\n", file=stderr()); flush.console() }
+
+  sync_cuda <- function(tag="") {
+    if (device$type == "cuda") {
+      # one of these will exist depending on torch version
+      try(torch::cuda_synchronize(), silent=TRUE)
+      try(torch::torch_cuda_synchronize(), silent=TRUE)
+      logerr(paste0("synced: ", tag))
+      system("nvidia-smi --query-gpu=memory.used,memory.free --format=csv,noheader,nounits")
+    }
+  }
+
   print("h1")
   dist_mat <- as.matrix(dist_mat)
   n <- nrow(dist_mat)
@@ -37,20 +49,33 @@ CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) 
   print("Starting VI")
   for (iter in 1:max_iter) {
     opt$zero_grad()
-    print("h2")
+    logerr("h2"); sync_cuda("h2")
+
     phi <- CSS_get_phi(theta)
-    print("h3")
+    logerr("h3"); sync_cuda("h3")
+
     z <- CSS_generate_z(phi, S)
-    print("h4")
+    logerr("h4"); sync_cuda("h4")
 
     log_p <- CSS_compute_log_joint(dist_vec, z, prior_params, B, device)
-    print("h5")
+    logerr("h5"); sync_cuda("h5")
+
     log_q <- CSS_compute_log_q(z, phi)
-    print("h6")
+    logerr("h6"); sync_cuda("h6")
+
     loss <- -(log_p - log_q)$mean()
-    print("h6.5")
-    loss$backward()
-    print("h7")
+    logerr("about to backward"); sync_cuda("pre-backward")
+
+    # wrap backward to force message/traceback into logs
+    tryCatch({
+      loss$backward()
+    }, error = function(e) {
+      logerr("BACKWARD ERROR: ", conditionMessage(e))
+      traceback(50)
+      quit(status=1)
+    })
+
+    logerr("h7"); sync_cuda("h7")
     nn_utils_clip_grad_norm_(theta, max_norm = 5.0)
     opt$step()
 
