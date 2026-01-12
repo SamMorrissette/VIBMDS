@@ -66,7 +66,6 @@ CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) 
     loss <- -(log_p - log_q)$mean()
     logerr("about to backward"); sync_cuda("pre-backward")
 
-    cat(torch::cuda_memory_summary(), "\n", file=stderr())
     # wrap backward to force message/traceback into logs
     with_detect_anomaly({
       loss$backward()
