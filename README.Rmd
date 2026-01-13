@@ -31,7 +31,7 @@ pak::pak("SamMorrissette/VIBMDS")
 
 ## Iris Example
 
-A simple example showing how to apply VIBMDS to the Iris dataset.
+A simple example showing how to apply VIBMDS to the Iris dataset for dimension reduction. 
 
 ```{r example}
 library(VIBMDS)
@@ -49,7 +49,7 @@ prior_params <- list(scale_lambda = torch_tensor(25.0, device = device),
 
 # Run VIBMDS
 results <- VIBMDS::vi_bmds(iris_dist, 
-                           p = 4, 
+                           p = 2, 
                            prior_params = prior_params,
                            B = 1000, S = 10, max_iter = 5000, 
                            device = device)
@@ -61,6 +61,7 @@ config <- as.matrix(var_samples$x$mean(dim = 1))
 ```
 ```{r}
 # Plot the final configuration
-pairs(config, col = iris$Species, main = "Object configuration")
+plot(config, col = iris$Species, main = "Object configuration",
+     xlab = "Dimension 1", ylab = "Dimension 2")
 ```
 
