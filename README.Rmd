@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of VIBMDS is to ...
+Variational Inference Bayesian Multidimensional Scaling (VIBMDS) is a variational inference algorithm applied to the Bayesian Multidimensional Scaling model. 
 
 ## Installation
 
@@ -29,27 +29,38 @@ You can install the development version of VIBMDS from [GitHub](https://github.c
 pak::pak("SamMorrissette/VIBMDS")
 ```
 
-## Example
+## Iris Example
 
-This is a basic example which shows you how to solve a common problem:
+A simple example showing how to apply VIBMDS to the Iris dataset.
 
 ```{r example}
 library(VIBMDS)
-## basic example code
+library(torch)
+
+device <- torch_device("cpu")
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+```{r}
+iris_dist <- as.matrix(dist(iris[,1:4]))
 
-```{r cars}
-summary(cars)
+# Uninformative priors:
+prior_params <- list(scale_lambda = torch_tensor(25.0, device = device),
+                     scale_sigma = torch_tensor(25.0, device = device))
+
+# Run VIBMDS
+results <- VIBMDS::vi_bmds(iris_dist, 
+                           p = 4, 
+                           prior_params = prior_params,
+                           B = 1000, S = 10, max_iter = 5000, 
+                           device = device)
+```
+```{r}
+# Generate object configurations from the variational approximation
+var_samples <- generate_z(results, 1000) 
+config <- as.matrix(var_samples$x$mean(dim = 1))
+```
+```{r}
+# Plot the final configuration
+pairs(config, col = iris$Species, main = "Object configuration")
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
