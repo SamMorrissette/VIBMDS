@@ -12,9 +12,9 @@ torch_log_binconcrete <- function(x, alpha, temperature) {
   if (!inherits(x, "torch_tensor")) {
     stop("x must be a torch tensor.")
   }
-  x <- x$clamp(1e-6, 1 - 1e-6)
-  alpha <- alpha$clamp_min(1e-6)
-  temperature <- temperature$clamp_min(1e-6)
+  x <- x$clamp(1e-7, 1 - 1e-7)
+  alpha <- alpha$clamp_min(1e-7)
+  temperature <- temperature$clamp_min(1e-7)
 
   log_temp <- torch_log(temperature)
   log_location <- torch_log(alpha)

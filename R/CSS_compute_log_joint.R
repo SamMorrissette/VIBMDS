@@ -17,5 +17,6 @@ CSS_compute_log_joint <- function(dist_vec, z, prior_params, B, device) {
   p_x_tilde <- distr_normal(0, z$lambda$unsqueeze(2))$log_prob(z$x_tilde)$sum(dim = c(2, 3))
 
   p_z_gates <- torch_log_binconcrete(z$z_gates, prior_params$loc, prior_params$temp)$sum(dim = 2)
+
   log_lik + p_sigma + p_lambda + p_x_tilde + p_z_gates
 }

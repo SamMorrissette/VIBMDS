@@ -10,7 +10,8 @@
 #' @examples
 torch_rbinconcrete <- function(sample_shape, alpha, temperature) {
   device <- alpha$device
-  u <- torch_rand(c(S, p), device = device)
+  p <- as.integer(alpha$numel())
+  u <- torch_rand(c(sample_shape, p), device = device)
   l <- torch_log(u) - torch_log1p(-u)
   torch_sigmoid((l + torch_log(alpha)) / temperature)
 }

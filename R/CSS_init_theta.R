@@ -15,9 +15,6 @@ CSS_init_theta <- function(n, p, device) {
     a_lambda = torch_zeros(p, device = device, requires_grad = TRUE),
     b_lambda = torch_zeros(p, device = device, requires_grad = TRUE),
 
-    # a_omega = torch_zeros(1, device = device, requires_grad = TRUE),
-    # b_omega = torch_zeros(1, device = device, requires_grad = TRUE),
-
     a_z = torch_zeros(p, device = device, requires_grad = TRUE),
     b_z = torch_zeros(p, device = device, requires_grad = TRUE),
 
