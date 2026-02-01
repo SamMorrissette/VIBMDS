@@ -12,6 +12,7 @@ CSS_init_theta <- function(n, p, device) {
   theta <- list(
     a_sigma = torch_zeros(1, device = device, requires_grad = TRUE),
     b_sigma = torch_zeros(1, device = device, requires_grad = TRUE),
+
     a_lambda = torch_zeros(p, device = device, requires_grad = TRUE),
     b_lambda = torch_zeros(p, device = device, requires_grad = TRUE),
 

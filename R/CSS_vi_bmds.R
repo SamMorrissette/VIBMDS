@@ -72,5 +72,6 @@ CSS_vi_bmds <- function(dist_mat, p = 10, prior_params, B, S, max_iter, device) 
   }
 
   phi <- CSS_get_phi(theta)
-  phi
+  list(phi = phi,
+       stop_iter = stop_iter)
 }
