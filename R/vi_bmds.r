@@ -67,6 +67,7 @@ vi_bmds <- function(dist_mat, p = 2, prior_params, B, S, max_iter, device) {
     }
   }
 
-  phi <- get_phi(theta)
-  phi
+  list(phi = get_phi(theta),
+       stop_iter = stop_iter,
+       elbo = elbo)
 }
